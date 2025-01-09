@@ -1,90 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9; /* 배경색 */
+        }
 
-<html>
-  <body>
-    
-    <p data-ke-size="size16">&nbsp;</p>
-<p data-ke-size="size16">&nbsp;</p>
-<div class="container">
-<h5 data-ke-size="size33"><b>나이 계산기</b></h5>
-<p data-ke-size="size16">&nbsp;</p>
-<form id="ageCalculator"><label for="year">생년월일 입력(ex'20010131')</label> <input id="birthdate" maxlength="8" name="birthdate" pattern="\d{4}-\d{2}-\d{2}" required="" type="text" /></form><button type="button" onclick="calculateAge()">나이 계산</button>
-<div>
-<p data-ke-size="size16">&nbsp;</p>
-</div>
-<div id="result">&nbsp;</div>
-</div>
-<script> 
-  document.getElementById('birthdate').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        calculateAge();
-    }
-});
+        .container { 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #ffffff; /* 흰색 배경 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 */
+        }
 
-function calculateAge() {
-    const birthdate = document.getElementById('birthdate').value;
-    if (!birthdate || birthdate.length !== 8 || !/^\d{8}$/.test(birthdate)) {
-        alert("생년월일을 YYYYMMDD 형식으로 입력하세요!");
-        return;
-    }
+        h5 {
+            text-align: center;
+            font-size: 1.8rem; /* 타이틀 크기 */
+            color: #333; /* 진한 회색 텍스트 */
+            margin-bottom: 20px;
+        }
 
-    const year = parseInt(birthdate.substring(0, 4));
-    const month = parseInt(birthdate.substring(4, 6));
-    const day = parseInt(birthdate.substring(6, 8));
+        label {
+            font-size: 1rem;
+            color: #555; /* 중간 회색 텍스트 */
+           display: inline-block;
+           text-align: center;
+           margin: 0 auto;
+        }
+      
 
-    if (month < 1 || month > 12 || day < 1 || day > 31) {
-        alert("유효한 생년월일을 입력하세요!");
-        return;
-    }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px; 
+            border: 1px solid #ddd; /* 연한 회색 테두리 */
+        }
 
-    const today = new Date();
-    const birthDate = new Date(year, month - 1, day);
-    const currentYear = today.getFullYear();
-    const birthYear = birthDate.getFullYear();
-    const birthMonth = birthDate.getMonth();
-    const birthDay = birthDate.getDate();
+        button {
+            display: inline-block;
+            background-color: #4CAF50; /* 녹색 버튼 */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease; /* 호버 효과 */
+        }
 
-    // 만 나이 계산
-    let fullAge = currentYear - birthYear;
-    if (today.getMonth() < birthMonth || (today.getMonth() === birthMonth && today.getDate() < birthDay)) {
-        fullAge--;
-    }
+        button:hover {
+            background-color: #45a049; /* 호버 시 더 어두운 녹색 */
+        }
 
-    // 세는 나이 계산
-    let countingAge = currentYear - birthYear + 1;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    // 연 나이 계산
-    let yearAge = currentYear - birthYear;
+        th, td {
+            border-bottom: 1px solid #ddd; /* 연한 회색 줄 */
+            padding: 12px;
+            text-align: center; /* 중앙 정렬 */
+        }
 
-    document.getElementById('result').innerHTML = `
-        <table>
-            <tr>
-                <th>세는 나이(한국식) </th>
-                <th>${countingAge}살</th>
-            </tr>
-            <tr>
-                <th>만 나이 </th>
-                <th>${fullAge}살</th>
-            </tr>
-            <tr>
-                <th>연 나이 </th>
-                <th>${yearAge}살</th>
-            </tr>
-        </table>
-    `;
-}
-</script>
-<p style="color: #333333; text-align: start;" data-ke-size="size16">&nbsp;</p>
-<p style="color: #333333; text-align: start;" data-ke-size="size16">&nbsp;</p>
-<h3 style="text-align: center;" data-ke-size="size23"><b>📜 나이 계산기 사용법</b></h3>
-<p style="color: #333333; text-align: center;" data-ke-size="size16"><span style="color: #333333; text-align: center;"><span>&nbsp;</span>☞</span> &nbsp;생년월일 8자리를 입력</p>
-<p style="color: #333333; text-align: center;" data-ke-size="size16"><span style="color: #333333; text-align: center;"><span>&nbsp;</span>☞</span>&nbsp; 엔터 또는 나이계산 버튼을 클릭 &nbsp;</p>
-<p style="color: #333333; text-align: center;" data-ke-size="size16"><span style="color: #333333; text-align: center;"><span>&nbsp;</span>☞</span>&nbsp; 만 나이, 연 나이, 세는 나이를 알 수 있어요<br /><br /></p>
-<p style="color: #333333; text-align: start;" data-ke-size="size16">&nbsp;</p>
-<p style="color: #333333; text-align: start;" data-ke-size="size16">&nbsp;</p>
-<p style="color: #333333; text-align: start;" data-ke-size="size16">&nbsp;</p>
-<p style="color: #333333; text-align: start;" data-ke-size="size14"><br /><span style="color: #c0d1e7;">&lt;button&nbsp;type="button"&nbsp;onclick="calculateAge()"&gt;&gt;나이&nbsp;계산&lt;/button&gt;</span></p>
+        th {
+            background-color: #f4f4f4; /* 연한 배경 */
+        }
 
+        .usage {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center; /* 중앙 정렬 */
+            background-color: #ffffff; /* 흰색 배경 */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 */
+        }
 
-  </body>
+        .usage h3 {
+            font-size: 1.2rem;
+            color: #333; /* 진한 회색 텍스트 */
+        }
+
+        .usage ul {
+            list-style-type: none; /* 리스트 스타일 제거 */
+            padding-left: 0; 
+        }
+
+        .usage li {
+            font-size: 0.9rem;
+            color: #555; /* 중간 회색 텍스트 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h5>나이 계산기</h5>
+        <form id="ageCalculator">
+            <label for="year">생년월일 입력 (ex '20010131')</label>
+            <input id="birthdate" type="text" maxlength="8" pattern="\d{4}-\d{2}-\d{2}" required>
+        </form>
+        <button type="button" onclick="calculateAge()">나이 계산</button>
+        <div id="result"></div>
+    </div>
+  </div>
+  <p></p> 
+    <div class="usage">
+        <h3>📜 나이 계산기 사용법</h3>
+        <ul>
+            <li>생년월일을 정확히 입력하세요.</li>
+            <li>"나이 계산" 버튼을 클릭하세요.</li>
+            <li>만 나이, 연 나이, 세는 나이를 확인하세요.</li>
+        </ul>
+    </div>
+
+    <script>
+        document.getElementById('birthdate').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                calculateAge();
+            }
+        });
+
+        function calculateAge() {
+          const birthdate = document.getElementById('birthdate').value;
+
+          if (!birthdate || birthdate.length !== 8 || !/^\d{8}$/.test(birthdate)) {
+              alert("생년월일을 YYYYMMDD 형식으로 입력하세요!");
+              return;
+          }
+
+          const year = parseInt(birthdate.substring(0, 4));
+          const month = parseInt(birthdate.substring(4, 6));
+          const day = parseInt(birthdate.substring(6, 8));
+
+          if (month < 1 || month > 12 || day < 1 || day > 31) {
+              alert("유효한 생년월일을 입력하세요!");
+              return;
+          }
+
+          const today = new Date();
+          const birthDate = new Date(year, month - 1, day);
+          const currentYear = today.getFullYear();
+          const birthYear = birthDate.getFullYear();
+          const birthMonth = birthDate.getMonth();
+          const birthDay = birthDate.getDate();
+
+          // 만 나이 계산
+          let fullAge = currentYear - birthYear;
+
+          if (today.getMonth() < birthMonth || (today.getMonth() === birthMonth && today.getDate() < birthDay)) {
+              fullAge--;
+          }
+
+          // 세는 나이 계산
+          let countingAge = currentYear - birthYear + 1;
+
+          // 연 나이 계산
+          let yearAge = currentYear - birthYear;
+
+          document.getElementById('result').innerHTML = `
+              <table>
+                  <tr><th>세는 나이(한국식)</th><td>${countingAge}살</td></tr>
+                  <tr><th>만 나이</th><td>${fullAge}살</td></tr>
+                  <tr><th>연 나이</th><td>${yearAge}살</td></tr>
+              </table>
+          `;
+      }
+    </script>
+
+</body>
 </html>
+
